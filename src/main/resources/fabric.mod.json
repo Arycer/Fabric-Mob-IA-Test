@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "eufonia-test-ai",
+  "version": "${version}",
+  "name": "Eufonia Test AI",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/eufonia-test-ai/icon.png",
+  "environment": "client",
+  "entrypoints": {},
+  "mixins": [
+    "eufonia-test-ai.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
