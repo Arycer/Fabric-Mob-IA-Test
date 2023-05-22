@@ -5,11 +5,18 @@
   "name": "Eufonia Test AI",
   "description": "",
   "authors": [],
-  "contact": {},
+  "contact": {
+    "repo": "https://github.com/conta/eufonia-test-ai"
+  },
   "license": "All-Rights-Reserved",
-  "icon": "assets/eufonia-test-ai/icon.png",
   "environment": "client",
-  "entrypoints": {},
+  "entrypoints": {
+    "client": [
+    ],
+    "main": [
+      "me.arycer.eufoniatestai.EufoniaTestAI"
+    ]
+  },
   "mixins": [
     "eufonia-test-ai.mixins.json"
   ],

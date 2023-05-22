@@ -1,2 +1,4 @@
-package PACKAGE_NAME;public class EufoniaTestAI {
+package me.arycer.eufoniatestai;
+
+public class EufoniaTestAI {
 }
