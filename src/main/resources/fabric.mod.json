@@ -12,9 +12,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
+      "me.arycer.eufoniatestai.Client"
     ],
     "main": [
-      "me.arycer.eufoniatestai.EufoniaTestAI"
+      "me.arycer.eufoniatestai.Main"
     ]
   },
   "mixins": [
@@ -23,6 +24,7 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
+    "geckolib": ">=4.1.3 ",
     "minecraft": "${minecraft_version}"
   }
 }
