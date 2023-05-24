@@ -6,8 +6,7 @@ import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 
 public class Main implements ModInitializer {
-    public static final String MOD_ID = "eufonia-test-ai";
-    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+    public static final Logger LOGGER = LogManager.getLogger("Arycer's Test AI for Eufonia Studio");
 
     @Override
     public void onInitialize() {

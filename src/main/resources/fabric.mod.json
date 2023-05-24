@@ -9,7 +9,7 @@
     "repo": "https://github.com/conta/eufonia-test-ai"
   },
   "license": "All-Rights-Reserved",
-  "environment": "server",
+  "environment": "*",
   "entrypoints": {
     "main": [
       "me.arycer.eufoniatestai.Main"
