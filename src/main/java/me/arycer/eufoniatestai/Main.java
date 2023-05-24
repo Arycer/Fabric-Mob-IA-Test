@@ -1,9 +1,6 @@
 package me.arycer.eufoniatestai;
 
-import me.arycer.eufoniatestai.entity.ModEntities;
-import me.arycer.eufoniatestai.entity.custom.TigerEntity;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib.GeckoLib;
@@ -15,8 +12,6 @@ public class Main implements ModInitializer {
     @Override
     public void onInitialize() {
         GeckoLib.initialize();
-
-        FabricDefaultAttributeRegistry.register(ModEntities.TIGER, TigerEntity.setAttributes());
 
         LOGGER.info("Mod iniciado!");
     }
