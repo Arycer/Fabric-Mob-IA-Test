@@ -4,6 +4,7 @@
   "package": "me.arycer.eufoniatestai.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "MixinZombieEntity"
   ],
   "client": [
   ],

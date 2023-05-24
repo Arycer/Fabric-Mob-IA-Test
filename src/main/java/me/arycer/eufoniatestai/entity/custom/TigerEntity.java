@@ -50,9 +50,9 @@ public class TigerEntity extends AnimalEntity implements GeoEntity {
         this.goalSelector.add(3, new WanderAroundFarGoal(this, 0.75f, 1.0f));
         this.goalSelector.add(4, new LookAroundGoal(this));
 
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PigEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, false));
+        this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, false));
+        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PigEntity.class, false));
     }
 
     @Override
