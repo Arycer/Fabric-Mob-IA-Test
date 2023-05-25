@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 
 public class TowerUpGoal extends Goal {
     protected final MobEntity entity;
+    protected int tickCount;
 
     public TowerUpGoal(MobEntity entity) {
         this.entity = entity;
@@ -23,7 +24,9 @@ public class TowerUpGoal extends Goal {
         if (this.entity.getNavigation().isFollowingPath()) return false;
 
         BreakBlockGoal breakBlockGoal = new BreakBlockGoal(this.entity);
-        return !breakBlockGoal.canStartMining() && getBlocksItemStack() != null;
+        if (breakBlockGoal.canStart()) return false;
+
+        return getBlocksItemStack() != null;
     }
 
     @Override
@@ -33,14 +36,24 @@ public class TowerUpGoal extends Goal {
 
     @Override
     public void start() {
+        this.tickCount = 10;
         towerUp();
-
         Main.LOGGER.info(String.format("TowerUpGoal from %s started!", this.entity.getName().getString()));
     }
 
     @Override
     public void stop() {
         Main.LOGGER.info(String.format("TowerUpGoal from %s stopped!", this.entity.getName().getString()));
+    }
+
+    @Override
+    public void tick() {
+        if (this.tickCount > 0) {
+            this.tickCount--;
+            return;
+        }
+
+        towerUp();
     }
 
     private ItemStack getBlocksItemStack() {

@@ -7,6 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.PickaxeItem;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -31,7 +32,8 @@ public class BreakBlockGoal extends Goal {
         if (target == null) return false;
 
         lookAtTarget();
-        return getLookingBlock() != null;
+        if (getLookingBlock() == null) return false;
+        return canMineBlock();
     }
 
     @Override
@@ -43,7 +45,9 @@ public class BreakBlockGoal extends Goal {
 
         lookAtTarget();
         if (getLookingBlock() == null) return false;
-        return this.blockState == getLookingBlock();
+        if (this.blockState != getLookingBlock()) return false;
+
+        return canMineBlock();
     }
 
     @Override
@@ -126,12 +130,10 @@ public class BreakBlockGoal extends Goal {
         World world = this.entity.getWorld();
         float hardness = blockState.getHardness(world, this.blockPos);
 
+        if (hardness < 1) return true;
+
         ItemStack heldItem = this.entity.getMainHandStack();
-        if (heldItem.isEmpty()) {
-            return hardness < 1.0F;
-        } else {
-            return hardness < heldItem.getMiningSpeedMultiplier(blockState);
-        }
+        return heldItem.getItem() instanceof PickaxeItem;
     }
 
     private void mineBlock() {
@@ -160,13 +162,5 @@ public class BreakBlockGoal extends Goal {
 
     private int getMaxProgress(Block block) {
         return (int) (block.getHardness() * 10);
-    }
-
-    public boolean canStartMining() {
-        LivingEntity target = this.entity.getTarget();
-        if (target == null) return false;
-
-        lookAtTarget();
-        return getLookingBlock() != null && canMineBlock();
     }
 }
