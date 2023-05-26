@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 
 public class TowerUpGoal extends Goal {
     protected final MobEntity entity;
@@ -93,6 +94,9 @@ public class TowerUpGoal extends Goal {
         World world = this.entity.getWorld();
 
         this.entity.getJumpControl().setActive();
+        this.entity.getLookControl().lookAt(entityPos.down().toCenterPos());
+
+        world.emitGameEvent(GameEvent.BLOCK_PLACE, entityPos, GameEvent.Emitter.of(this.entity));
         world.setBlockState(entityPos, handBlock.getDefaultState());
 
         ItemStack blocksItemStack = getBlocksItemStack();
@@ -100,4 +104,6 @@ public class TowerUpGoal extends Goal {
 
         blocksItemStack.decrement(1);
     }
+
+    //TODO: Make the mob bridge
 }

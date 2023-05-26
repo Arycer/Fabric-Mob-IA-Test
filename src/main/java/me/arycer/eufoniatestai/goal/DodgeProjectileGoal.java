@@ -10,11 +10,11 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.EnumSet;
 
-public class DodgeArrowGoal extends Goal {
+public class DodgeProjectileGoal extends Goal {
     protected final MobEntity entity;
     protected final double speed;
 
-    public DodgeArrowGoal(MobEntity entity, double speed) {
+    public DodgeProjectileGoal(MobEntity entity, double speed) {
         this.entity = entity;
         this.speed = speed;
         this.setControls(EnumSet.of(Goal.Control.MOVE));
@@ -22,12 +22,12 @@ public class DodgeArrowGoal extends Goal {
 
     @Override
     public boolean canStart() {
-        return targetShootingBow();
+        return targetChargingProjectile();
     }
 
     @Override
     public boolean shouldContinue() {
-        return targetShootingBow();
+        return targetChargingProjectile();
     }
 
     @Override
@@ -41,17 +41,20 @@ public class DodgeArrowGoal extends Goal {
         BlockPos strafeLocation = this.entity.getBlockPos().add(lr == 0 ? distance_i : -distance_i, 0, lr == 1 ? distance_k : -distance_k);
         this.entity.getNavigation().startMovingTo(strafeLocation.getX(), strafeLocation.getY(), strafeLocation.getZ(), this.speed * 1.25f);
 
-        Main.LOGGER.info(String.format("DodgeArrowGoal: %s trying to dodge an arrow!", this.entity.getName().getString()));
+        Main.LOGGER.info(String.format("DodgeProjectileGoal: %s trying to dodge!", this.entity.getName().getString()));
     }
 
-    private boolean targetShootingBow() {
+    private boolean targetChargingProjectile() {
         LivingEntity target = this.entity.getTarget();
         if (target == null) return false;
 
         ItemStack mainHandStack = target.getMainHandStack();
         ItemStack offHandStack = target.getOffHandStack();
 
-        if (!mainHandStack.getItem().equals(Items.BOW) && !offHandStack.getItem().equals(Items.BOW)) return false;
+        boolean isHoldingBow = mainHandStack.getItem().equals(Items.BOW) || offHandStack.getItem().equals(Items.BOW);
+        boolean isHoldingTrident = mainHandStack.getItem().equals(Items.TRIDENT) || offHandStack.getItem().equals(Items.TRIDENT);
+
+        if (!isHoldingBow && !isHoldingTrident) return false;
         return target.isUsingItem();
     }
 }
