@@ -53,8 +53,9 @@ public class DodgeProjectileGoal extends Goal {
 
         boolean isHoldingBow = mainHandStack.getItem().equals(Items.BOW) || offHandStack.getItem().equals(Items.BOW);
         boolean isHoldingTrident = mainHandStack.getItem().equals(Items.TRIDENT) || offHandStack.getItem().equals(Items.TRIDENT);
+        boolean isHoldingCrossbow = mainHandStack.getItem().equals(Items.CROSSBOW) || offHandStack.getItem().equals(Items.CROSSBOW);
 
-        if (!isHoldingBow && !isHoldingTrident) return false;
+        if (!isHoldingBow && !isHoldingTrident && !isHoldingCrossbow) return false;
         return target.isUsingItem();
     }
 }

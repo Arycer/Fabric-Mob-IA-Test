@@ -10,7 +10,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 
 public class TowerUpGoal extends Goal {
     protected final MobEntity entity;
@@ -24,8 +23,12 @@ public class TowerUpGoal extends Goal {
     public boolean canStart() {
         if (this.entity.getNavigation().isFollowingPath()) return false;
 
-        BreakBlockGoal breakBlockGoal = new BreakBlockGoal(this.entity);
-        if (breakBlockGoal.canStart()) return false;
+        if (this.entity.getTarget() == null) return false;
+        BlockPos targetPos = this.entity.getTarget().getBlockPos();
+        BlockPos entityPos = this.entity.getBlockPos();
+
+        if (targetPos.getY() <= entityPos.getY()) return false;
+        if (isBlockedUp()) return false;
 
         return getBlocksItemStack() != null;
     }
@@ -37,8 +40,6 @@ public class TowerUpGoal extends Goal {
 
     @Override
     public void start() {
-        this.tickCount = 10;
-        towerUp();
         Main.LOGGER.info(String.format("TowerUpGoal from %s started!", this.entity.getName().getString()));
     }
 
@@ -55,6 +56,14 @@ public class TowerUpGoal extends Goal {
         }
 
         towerUp();
+        this.tickCount = 10;
+    }
+
+    private boolean isBlockedUp() {
+        World world = this.entity.getWorld();
+        BlockPos entityPos = this.entity.getBlockPos();
+
+        return world.getBlockState(entityPos.up(2)).isSolidBlock(world, entityPos.up());
     }
 
     private ItemStack getBlocksItemStack() {
@@ -96,9 +105,7 @@ public class TowerUpGoal extends Goal {
         this.entity.getJumpControl().setActive();
         this.entity.getLookControl().lookAt(entityPos.down().toCenterPos());
 
-        world.emitGameEvent(GameEvent.BLOCK_PLACE, entityPos, GameEvent.Emitter.of(this.entity));
         world.setBlockState(entityPos, handBlock.getDefaultState());
-
         ItemStack blocksItemStack = getBlocksItemStack();
         if (blocksItemStack == null) return;
 
