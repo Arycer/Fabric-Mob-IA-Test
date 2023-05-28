@@ -1,15 +1,10 @@
 package me.arycer.eufoniatestai.mixin;
 
-import me.arycer.eufoniatestai.goal.BreakBlockGoal;
-import me.arycer.eufoniatestai.goal.CutWoodGoal;
-import me.arycer.eufoniatestai.goal.DodgeProjectileGoal;
-import me.arycer.eufoniatestai.goal.TowerUpGoal;
+import me.arycer.eufoniatestai.goal.*;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.MobNavigation;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -26,6 +21,9 @@ public class MixinZombieEntity extends HostileEntity {
 
     @Override
     public void initGoals() {
+        this.goalSelector.add(1, new FollowConcreteGoal(this));
+
+        /*
         this.goalSelector.add(2, new ZombieAttackGoal((ZombieEntity) (Object) this, 1.0, false));
 
         this.goalSelector.add(6, new MoveThroughVillageGoal(this, 1.0, true, 4, () -> true));
@@ -36,6 +34,7 @@ public class MixinZombieEntity extends HostileEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, false));
 
         initCustomAI();
+        */
     }
 
     private void initCustomAI() {

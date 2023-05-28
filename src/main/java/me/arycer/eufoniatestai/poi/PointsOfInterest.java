@@ -12,14 +12,17 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.poi.PointOfInterest;
 import net.minecraft.world.poi.PointOfInterestStorage;
 import net.minecraft.world.poi.PointOfInterestType;
 
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class PointsOfInterest {
     public static void register() {
         registerPOI("wood", Blocks.OAK_LOG, Blocks.BIRCH_LOG, Blocks.SPRUCE_LOG, Blocks.DARK_OAK_LOG, Blocks.ACACIA_LOG, Blocks.JUNGLE_LOG, Blocks.MANGROVE_LOG, Blocks.CHERRY_LOG);
+        registerPOI("concrete", Blocks.BLACK_CONCRETE);
     }
 
     private static void registerPOI(String id, Block... blocks) {
@@ -53,5 +56,11 @@ public class PointsOfInterest {
         if (!(entity.getWorld() instanceof ServerWorld world)) return null;
         PointOfInterestStorage poiStorage = world.getPointOfInterestStorage();
         return poiStorage.getNearestPosition(getPredicate(poi), entity.getBlockPos(), radius, PointOfInterestStorage.OccupationStatus.ANY).orElse(null);
+    }
+
+    public static Stream<BlockPos> getNearPOIs(MobEntity entity, RegistryKey<PointOfInterestType> poi, int radius) {
+        if (!(entity.getWorld() instanceof ServerWorld world)) return null;
+        PointOfInterestStorage poiStorage = world.getPointOfInterestStorage();
+        return poiStorage.getInCircle(getPredicate(poi), entity.getBlockPos(), radius, PointOfInterestStorage.OccupationStatus.ANY).map(PointOfInterest::getPos);
     }
 }
