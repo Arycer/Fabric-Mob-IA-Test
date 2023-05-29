@@ -13,6 +13,9 @@
   "entrypoints": {
     "main": [
       "me.arycer.eufoniatestai.Main"
+    ],
+    "client": [
+      "me.arycer.eufoniatestai.client.ClientMain"
     ]
   },
   "mixins": [
