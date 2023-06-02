@@ -34,15 +34,15 @@ public class CutWoodGoal extends Goal {
 
     @Override
     public boolean canStart() {
-        if (!needsWood()) return false;
-
-        LivingEntity target = entity.getTarget();
-        if (target != null) return false;
-
         ServerWorld world = (ServerWorld) entity.getWorld();
         if (world.getTime() - lastChecked < 300) return false;
         Main.LOGGER.info(String.format("CutWoodGoal: %s searching wood", entity.getName().getString()));
         lastChecked = world.getTime();
+
+        if (!needsWood()) return false;
+
+        LivingEntity target = entity.getTarget();
+        if (target != null) return false;
 
         BlockPos nearestWoodPos = PointsOfInterest.getNearestPOI(entity, PointsOfInterest.getPointOfInterest("wood"), 32);
         if (nearestWoodPos == null) return false;

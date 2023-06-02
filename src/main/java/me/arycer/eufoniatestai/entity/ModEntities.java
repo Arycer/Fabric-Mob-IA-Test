@@ -15,7 +15,7 @@ public class ModEntities {
             Registries.ENTITY_TYPE,
             new Identifier(Main.MOD_ID, "bird"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, BirdEntity::new)
-                    .dimensions(EntityDimensions.fixed(2f, 2f))
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
                     .build()
     );
 }
