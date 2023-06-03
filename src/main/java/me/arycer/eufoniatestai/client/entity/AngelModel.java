@@ -2,7 +2,6 @@ package me.arycer.eufoniatestai.client.entity;
 
 import me.arycer.eufoniatestai.Main;
 import me.arycer.eufoniatestai.entity.custom.AngelEntity;
-import me.arycer.eufoniatestai.entity.custom.BirdEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import software.bernie.geckolib.constant.DataTickets;

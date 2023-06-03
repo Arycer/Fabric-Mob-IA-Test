@@ -1,9 +1,9 @@
 package me.arycer.eufoniatestai.entity;
 
 import me.arycer.eufoniatestai.Main;
+import me.arycer.eufoniatestai.client.entity.AngelRenderer;
 import me.arycer.eufoniatestai.client.entity.BirdRenderer;
 import me.arycer.eufoniatestai.entity.custom.AngelEntity;
-import me.arycer.eufoniatestai.client.entity.AngelRenderer;
 import me.arycer.eufoniatestai.entity.custom.BirdEntity;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;

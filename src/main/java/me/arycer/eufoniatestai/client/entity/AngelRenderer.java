@@ -2,7 +2,6 @@ package me.arycer.eufoniatestai.client.entity;
 
 import me.arycer.eufoniatestai.Main;
 import me.arycer.eufoniatestai.entity.custom.AngelEntity;
-import me.arycer.eufoniatestai.entity.custom.BirdEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;

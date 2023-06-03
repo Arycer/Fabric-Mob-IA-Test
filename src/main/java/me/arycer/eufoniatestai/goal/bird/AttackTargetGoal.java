@@ -1,6 +1,5 @@
 package me.arycer.eufoniatestai.goal.bird;
 
-import me.arycer.eufoniatestai.Main;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.Goal;
