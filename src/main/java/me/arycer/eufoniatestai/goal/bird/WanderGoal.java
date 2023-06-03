@@ -47,8 +47,10 @@ public class WanderGoal extends Goal {
         LivingEntity target = entity.getTarget();
         if (target != null && entity.isTarget(target, TargetPredicate.DEFAULT)) return;
 
+        double speed_mod = getSpeedMod();
+
         Vec3d targetPos = getWanderTarget();
-        Vec3d velocity = targetPos.subtract(entity.getPos()).normalize().multiply(0.7);
+        Vec3d velocity = targetPos.subtract(entity.getPos()).normalize().multiply(speed_mod);
 
         entity.getLookControl().lookAt(targetPos);
         entity.setVelocity(velocity);
@@ -56,10 +58,14 @@ public class WanderGoal extends Goal {
         delay = toGoalTicks(2);
     }
 
+    private double getSpeedMod() {
+        return 0.5 + entity.getRandom().nextDouble() * 0.4;
+    }
+
     private Vec3d getWanderTarget() {
         Vec3d pos = entity.getPos();
 
-        int radius = 5;
+        int radius = 10;
         double random = entity.getRandom().nextDouble() * radius * Math.PI;
 
         double i = Math.cos(random); // x
@@ -69,7 +75,7 @@ public class WanderGoal extends Goal {
         double k = entity.getRandom().nextDouble() * kOffset - kOffset / 2.0; // y
 
         BlockState state = entity.world.getBlockState(BlockPos.ofFloored(pos.add(i, k - 1, j)));
-        if (!state.isAir()) k += 5;
+        if (!state.isAir()) k += 8;
 
         return pos.add(i, k, j);
     }

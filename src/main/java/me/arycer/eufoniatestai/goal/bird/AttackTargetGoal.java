@@ -10,6 +10,7 @@ import net.minecraft.util.math.Vec3d;
 public class AttackTargetGoal extends Goal {
     protected final PathAwareEntity entity;
     private int delay = toGoalTicks(20);
+    private int attackDelay = toGoalTicks(5);
 
     public AttackTargetGoal(PathAwareEntity entity) {
         this.entity = entity;
@@ -48,22 +49,19 @@ public class AttackTargetGoal extends Goal {
 
         if (entity.squaredDistanceTo(target.getPos()) < 2) {
             entity.setVelocity(Vec3d.ZERO);
-            if (delay > 0) {
-                --delay;
+            if (attackDelay > 0) {
+                --attackDelay;
                 return;
             }
-            entity.tryAttack(target);
-            delay = toGoalTicks(5);
+
+            if (entity.getBoundingBox().expand(0.5).intersects(target.getBoundingBox())) {
+                entity.tryAttack(target);
+                attackDelay = toGoalTicks(5);
+            }
         }
     }
 
     private double getSpeedMod() {
-        LivingEntity target = entity.getTarget();
-        if (target == null || !entity.isTarget(target, TargetPredicate.DEFAULT)) return 0;
-
-        double distance = entity.squaredDistanceTo(entity.getTarget().getPos());
-        double maxDistance = 10;
-
-        return 0.2 + (distance / maxDistance) * 0.8;
+        return 0.5 + entity.getRandom().nextDouble() * 0.4;
     }
 }

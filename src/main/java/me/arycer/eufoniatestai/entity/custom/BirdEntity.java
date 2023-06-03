@@ -13,6 +13,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -63,24 +64,10 @@ public class BirdEntity extends PathAwareEntity implements GeoEntity, Monster {
     }
 
     protected void initGoals() {
-        /*
-        this.goalSelector.add(5, new FlyGoal(this, 1.0D));
-        this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(4, new LookAroundGoal(this));
-        //this.goalSelector.add(1, new BirdAttackGoal(this, speed));
-        this.goalSelector.add(1, new MeleeAttackGoal(this, 1.0D, true));
-
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, false));
-         */
-
-        //this.goalSelector.add(2, new MeleeAttackGoal(this, 12.0D, false));
-        //this.goalSelector.add(4, new FlyGoal(this, 1.0D));
-        //this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        //this.goalSelector.add(7, new LookAroundGoal(this));
         this.goalSelector.add(1, new AttackTargetGoal(this));
         this.goalSelector.add(2, new WanderGoal(this));
 
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, VillagerEntity.class, false));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, SheepEntity.class, false));
     }
 
     @Override
@@ -89,24 +76,18 @@ public class BirdEntity extends PathAwareEntity implements GeoEntity, Monster {
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
+        AnimationController<T> controller = tAnimationState.getController();
         if (tAnimationState.isMoving()) {
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.bird.fly", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
+            controller.setAnimation(RawAnimation.begin().then("animation.bird.fly", Animation.LoopType.LOOP));
+        } else {
+            controller.setAnimation(RawAnimation.begin().then("animation.bird.idle", Animation.LoopType.LOOP));
         }
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.bird.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
+
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
-    }
-
-    // test purposes
-    @Override
-    public void tick() {
-        super.tick();
-        //LivingEntity target = this.getTarget();
-        //Main.LOGGER.info("Target: " + target);
     }
 }
