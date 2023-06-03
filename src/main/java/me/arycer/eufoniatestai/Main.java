@@ -16,9 +16,9 @@ public class Main implements ModInitializer {
     @Override
     public void onInitialize() {
         GeckoLib.initialize();
+        
         PointsOfInterest.register();
-
-        FabricDefaultAttributeRegistry.register(ModEntities.BIRD, BirdEntity.setAttributes());
+        ModEntities.registerEntities();
 
         LOGGER.info("Mod iniciado!");
     }

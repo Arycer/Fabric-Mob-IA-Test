@@ -8,6 +8,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 public class ClientMain implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        EntityRendererRegistry.register(ModEntities.BIRD, BirdRenderer::new);
+        ModEntities.registerRenderers();
     }
 }
